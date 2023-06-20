@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REAL TIME GAS APP</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    >
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+  >
+
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+
+  <body>
+    <nav class="container mx-auto flex items-center justify-between py-4">
+      <div>
+        <!--Logo needs to be changed-->
+
+        <img
+          src="data:image/png;base64,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"
+          alt="logo"
+          height="20px"
+          width="90px"
+        >
+      </div>
+      <div>
+        <ul class="flex items-center">
+          <li class="ml-6"><a href="#">Menu</a></li>
+          <li class="ml-6"><a href="#">Offers</a></li>
+          <li class="ml-6"><a href="/register">Registers</a></li>
+          <li class="ml-6"><a href="/login">Login</a></li>
+          <li class="ml-6">
+            <a href="/cart" class="inline-block px-4 py-2 rounded-full"
+              ><img
+                src="https://img.uxwing.com/wp-content/themes/uxwing/download/e-commerce-currency-shopping/shopping-cart-icon.png"
+                alt=""
+                height="20px"
+                width="60px"
+            ></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+
+    <%-body %>
+    <footer></footer>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

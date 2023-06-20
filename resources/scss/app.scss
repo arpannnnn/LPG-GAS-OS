@@ -34,3 +34,10 @@ section.hero {
         color: $pure;
     }
 }
+
+section.cart{
+    background: $secondary;
+    .amount{
+        color:$primary;
+    }
+}
