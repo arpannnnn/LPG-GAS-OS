@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REAL TIME GAS APP</title>
+    <title>GAS APP</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -33,7 +33,7 @@
         </div>
         <div class="w-1/2">
           <img
-            src="https://www.nepalgas.com.np/assets/uploads/product/2021-12-09-12-58-32-GAS2(1).png"
+            src="/public/img/delivery_boy.png"
             alt=""
           >
         </div>
@@ -42,19 +42,22 @@
     <section class="menu container mx-auto py-8">
       <h1 class="text-xl font-bold mb-8">Our Products</h1>
       <div class="grid grid-cols-4 col-gap-12 row-gap-16">
+        
+        <% gas.forEach(function(gas){ %>
+          
         <div class="w-64">
           <img
             class="h-40 mb-4 mx-auto"
-            src="https://www.nepalgas.com.np/assets/uploads/product/2021-12-09-12-58-32-GAS2(1).png"
+            src="/public/img/<%=gas.image %>" alt=""
           >
           <div class="text-center">
-            <h2 class="mb-4 text-lg">Metal Cylinder 14.2 KG</h2>
+            <h2 class="mb-4 text-lg"><%=gas.name %> </h2>
             <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >Regular</span
+              ><%=gas.size %></span
             >
             <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 1850</span>
-              <button
+              <span class="font-bold text-lg ">NPRs <%= gas.price %></span>
+              <button data-gas="<%=JSON.stringify(gas) %>"
                 class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
               >
                 <span>+</span>
@@ -63,137 +66,12 @@
             </div>
           </div>
         </div>
-        <div class="w-64">
-          <img
-            class="h-40 mb-4 mx-auto"
-            src="https://www.nepalgas.com.np/assets/uploads/product/2021-12-10-09-06-51-product3(1).png"
-          >
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Fiber Cylinder 14.2 KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >Regular</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 2250</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64">
-          <img class="h-40 mb-4 mx-auto" src="https://www.nepalgas.com.np/assets/uploads/product/2021-12-10-09-06-22-product2.png" />
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Fiber Cylinder 5KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >Small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 750</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64">
-          <img class="h-40 mb-4 mx-auto" src="https://www.frontrunneroutfitters.com/media/catalog/product/cache/11f448c2736cb138681faf0ba59260e1/k/i/kitc033.jpg" />
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Metal Cylinder 5KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 550</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64">
-          <img class="h-40 mb-4 mx-auto" src="https://5.imimg.com/data5/SELLER/Default/2021/3/EG/CM/WH/48575250/19-kg-hp-commercial-gas-500x500.jpg" />
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Metal Cylinder 19.2 KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >Large</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 2250</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64">
-          <img class="h-40 mb-4 mx-auto" src="https://5.imimg.com/data5/XM/QC/IT/SELLER-8882586/small-lpg-cylinder-1000x1000.jpg" />
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Mild Steel Mini Cylinder 2.5 KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >Mini</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 250</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64">
-          <img class="h-40 mb-4 mx-auto" src="https://www.nepalgas.com.np/assets/uploads/product/2021-12-09-12-58-32-GAS2(1).png" />
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Metal Cylinder 14.2 KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >Regular</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 1850</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-64">
-          <img class="h-40 mb-4 mx-auto" src="https://www.nepalgas.com.np/assets/uploads/product/2021-12-10-09-06-22-product2.png" />
-          <div class="text-center">
-            <h2 class="mb-4 text-lg">Fiber Cylinder 5 KG</h2>
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"
-              >small</span
-            >
-            <div class="flex items-center justify-around mt-6">
-              <span class="font-bold text-lg">NPRS 750</span>
-              <button
-                class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
-              >
-                <span>+</span>
-                <span class="ml-4">Add</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+
+        <%}) %>
+        
+        
+        
+      
     </section>
-    <script src="/js/app.js"></script>
   </body>
 </html>
