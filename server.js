@@ -5,7 +5,7 @@ const path = require('path')
 const ejs = require('ejs')
 const expressLayout = require('express-ejs-layouts')
 const PORT = process.env.PORT || 3000
-
+const passport = require('passport')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('express-flash')
@@ -27,6 +27,12 @@ mongoose
     console.error("Error connecting to the database:", error);
   });
 
+
+
+
+
+
+
 // Session Store
 const mongoStore = new MongoDbStore({
   mongooseConnection: mongoose.connection,
@@ -44,6 +50,18 @@ app.use(
   })
 )
 
+
+
+
+//passport config 
+const passportInit =require('./app/config/passport')
+passportInit(passport)
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 app.use(flash())
 
 // Assets
@@ -55,8 +73,13 @@ app.use(express.json())
 //Global Midalware
 app.use(( req,res,next)=>{
 res.locals.session=req.session
+
+res.locals.user=req.user
 next()
 })
+
+
+
 
 // Set Template Engine
 app.use(expressLayout)
