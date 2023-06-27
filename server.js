@@ -48,6 +48,7 @@ app.use(flash())
 
 // Assets
 app.use(express.static("public"))
+app.use(express.urlencoded({extended:false}))
 app.use("/public/", express.static("./public"))
 app.use(express.json())
 
@@ -68,3 +69,5 @@ require("./routes/web")(app)
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+

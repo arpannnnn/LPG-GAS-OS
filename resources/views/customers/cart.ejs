@@ -19,7 +19,7 @@
             <span class="flex-1">
             <%= gas.qty %> Pcs 
             </span>
-            <span class="font-bold text-lg">NPRs<%= gas.item.price * gas.qty %></span>
+            <span class="font-bold text-lg">NPRs <%= gas.item.price * gas.qty %></span>
           </div>
           <%} %>
 
@@ -28,7 +28,7 @@
             <div class="text-right py-4">
               <div>
                 <span class="text-lg font-bold"> Total Amount</span>
-                <span class="amount text-2xl font-bold ml-2">NPRS <%=session.cart.totalPrice %></span>
+                <span class="amount text-2xl font-bold ml-2">NPRs <%=session.cart.totalPrice %></span>
               </div>
               <div>
                 <form action="" class="mt-12">
@@ -41,6 +41,10 @@
                   </div>
                 </form>
               </div>
+
+            <!---- <a href=""
+              class=""inline-block cursor-pointer btn-primary px-6 py-2 rounded-full
+              text-white font-bold mt-6"> Login to continue</a> -->
               <% } else { %>
                 <div class="empty-cart py-16">
                   <div class="container mx-auto text-center">
