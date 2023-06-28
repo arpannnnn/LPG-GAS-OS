@@ -86,9 +86,24 @@ function authController() {
 
 
 
-            console.log(req.body)
+        
 
-        }
+        },
+        logout(req, res) {
+            req.logout(function (err) {
+              if (err) {
+                console.error(err);
+                // Handle any errors that occurred during logout
+              }
+              // Redirect or respond after successful logout
+              return res.redirect('/login');
+            });
+          }
+          
+
+
+
+
     }
 }
 

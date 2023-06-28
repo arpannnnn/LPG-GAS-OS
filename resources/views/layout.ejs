@@ -32,10 +32,15 @@
       </div>
       <div>
         <ul class="flex items-center">
-          <li class="ml-6"><a href="#">Our Products</a></li>
+          <li class="ml-6"><a href="/">Our Products</a></li>
           <li class="ml-6"><a href="#">Offers</a></li>
         <% if(user) { %>
-          <li class="ml-6"><a href="/logout">Logout</a></li>
+          <li class="ml-6">
+            <form  id="logout" action="/logout" method="POST">        
+            
+            <a onClick="document.getElementById('logout').submit()" href="#">Logout</a>
+          </form>
+          </li>
 <% } else { %>
  
           <li class="ml-6"><a href="/register">Register</a></li>
