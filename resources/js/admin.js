@@ -1,8 +1,8 @@
 import axios from "axios";
 import moment from "moment";
-import Noty from "noty";
+//import Noty from "noty";
 
-export function initAdmin(socket) {
+ function initAdmin() {
   const orderTableBody = document.querySelector("#orderTableBody");
   let orders = [];
   let markup;
@@ -41,7 +41,7 @@ export function initAdmin(socket) {
               <p>${order._id}</p>
               <div>${renderItems(order.items)}</div>
           </td>
-          <td class="border px-4 py-2">${order.customerId.name}</td>
+          <td class="border px-4 py-2">${order.customerId.name}</td> 
           <td class="border px-4 py-2">${order.address}</td>
           <td class="border px-4 py-2">
               <div class="inline-block relative w-64">
@@ -89,25 +89,13 @@ export function initAdmin(socket) {
           <td class="border px-4 py-2">
               ${moment(order.createdAt).format("hh:mm A")}
           </td>
-          <td class="border px-4 py-2">
-              ${order.paymentStatus ? "paid" : "Not paid"}
-          </td>
+         
       </tr>
   `;
       })
-      .join("");
+      .join("")
   }
 
-  socket.on("orderPlaced", (order) => {
-    new Noty({
-      type: "success",
-      timeout: 1000,
-      text: "New Order Placed",
-      progressBar: false,
-      layout: "bottomLeft",
-    }).show();
-    orders.unshift(order);
-    orderTableBody.innerHTML = "";
-    orderTableBody.innerHTML = generateMarkup(orders);
-  });
+
 }
+module.exports=initAdmin
