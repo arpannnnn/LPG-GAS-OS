@@ -1,32 +1,35 @@
 import axios from "axios";
 import Noty from "noty";
 import { initAdmin } from "./admin";
+import moment from "moment/moment";
+import { createElement } from "react";
 let addToCart = document.querySelectorAll(".add-to-cart");
-let cartCounter = document.querySelector('#cartCounter');
+let cartCounter = document.querySelector("#cartCounter");
 
 function updateCart(gas) {
-  axios.post('/update-cart', gas)
-    .then(res => {
+  axios
+    .post("/update-cart", gas)
+    .then((res) => {
       cartCounter.innerText = res.data.totalQty;
       new Noty({
-        type: 'success',
+        type: "success",
         timeout: 1000,
         progressBar: false,
-        text: 'Item added to cart'
+        text: "Item added to cart",
       }).show();
     })
-    .catch(err => {
+    .catch((err) => {
       new Noty({
-        type: 'error',
+        type: "error",
         timeout: 1000,
         progressBar: false,
-        text: 'Something went wrong'
+        text: "Something went wrong",
       }).show();
     });
 }
 
 addToCart.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
+  btn.addEventListener("click", (e) => {
     let gas = JSON.parse(btn.dataset.gas);
     updateCart(gas);
     console.log(gas);
@@ -41,4 +44,33 @@ if (alertMsg) {
   }, 2000);
 }
 
-initAdmin()
+initAdmin();
+
+//Change Order Status
+let statuses = document.querySelectorAll(".status_line");
+let hiddenInput = document.querySelector("#hiddenInput");
+let order = hiddenInput ? hiddenInput.value : null;
+order = JSON.parse(order); //for obj receive
+let time = document.createElement("small");
+
+
+function updateStatus(order) {
+  let stepCompleted = true;
+  statuses.forEach((status) => {
+    let dataProp = status.dataset.status;
+    if (stepCompleted) {
+      status.classList.add("step-completed");
+    }
+    if (dataProp === order.status) {
+      stepCompleted = false;
+      time.innerText=moment(order.updatedAt).format('hh:mm A')
+      status.appendChild(time)
+      if (status.nextElementSibling) {
+        status.nextElementSibling.classList.add("current");
+      }
+    }
+  });
+
+  //
+}
+updateStatus(order);

@@ -89,8 +89,14 @@ app.set("view engine", "ejs")
 // Routes
 require("./routes/web")(app)
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+//socket 
+const io =require('socket.io')(server)
+io.on('connection',()=>{
+  
+})
 
 
