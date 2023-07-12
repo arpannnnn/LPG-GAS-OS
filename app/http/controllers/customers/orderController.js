@@ -58,17 +58,14 @@ function orderController() {
     },
 
     async show(req, res) {
-      try {
-        const order = await Order.findById(req.params.id).populate("customerId");
-        // Authorize User (only show the orders of their own)
-        if (order && req.user._id.toString() === order.customerId.toString()) {
-          return res.render("customers/singleOrder", { order });
-        }
-        return res.redirect("/");
-      } catch (error) {
-        req.flash("error", "Something went wrong");
-        return res.redirect("/");
+      const order = await Order.findById(req.params.id);
+      // Authorize user
+      if (req.user._id.toString() === order.customerId.toString()) {
+        return res.render("customers/singleOrder", { order: order });
       }
+      return res.redirect("/");
+      
+      
     },
   };
 }
