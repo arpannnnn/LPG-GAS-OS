@@ -41,6 +41,14 @@ function orderController() {
         req.flash('error', 'Something went wrong');
         return res.redirect('/');
       }
+    },
+   async show(req,res){
+     const order= await Order.findById(req.params.id)
+    // Authorize User(only show the orders of own)
+    if(req.user._id.toString()===order.customerId.toString()){
+       return res.render('customers/singleOrder',{order})
+    }
+    return res.redirect('/')
     }
   }
 }
