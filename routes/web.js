@@ -28,7 +28,7 @@ function initRoutes(app) {
   app.post("/login", authController().postLogin);
 
   app.get("/register",guest, authController().register);
-  
+  app.post("/register", authController().postRegister);
   app.post("/logout",authController().logout);
 
 //Customer routes
