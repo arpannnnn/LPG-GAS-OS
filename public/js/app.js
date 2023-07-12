@@ -31155,7 +31155,7 @@ const isThenable = (thing) =>
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkLPG"] = self["webpackChunkLPG"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunklpg"] = self["webpackChunklpg"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
