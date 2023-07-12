@@ -44,7 +44,7 @@ if (alertMsg) {
   }, 2000);
 }
 
-initAdmin();
+
 
 //Change Order Status
 let statuses = document.querySelectorAll(".status_line");
@@ -53,8 +53,11 @@ let order = hiddenInput ? hiddenInput.value : null;
 order = JSON.parse(order); //for obj receive
 let time = document.createElement("small");
 
-
 function updateStatus(order) {
+  statuses.forEach((status) => {
+    status.classList.remove("step-completed");
+    status.classList.remove("current");
+  });
   let stepCompleted = true;
   statuses.forEach((status) => {
     let dataProp = status.dataset.status;
@@ -63,8 +66,8 @@ function updateStatus(order) {
     }
     if (dataProp === order.status) {
       stepCompleted = false;
-      time.innerText=moment(order.updatedAt).format('hh:mm A')
-      status.appendChild(time)
+      time.innerText = moment(order.updatedAt).format("hh:mm A");
+      status.appendChild(time);
       if (status.nextElementSibling) {
         status.nextElementSibling.classList.add("current");
       }
@@ -74,3 +77,30 @@ function updateStatus(order) {
   //
 }
 updateStatus(order);
+
+//socketClientSide
+let socket = io();
+initAdmin(socket);
+//join
+if (order) {
+  socket.emit("join", `order_${order._id}`);
+}
+
+let adminAreaPath = window.location.pathname;
+console.log(adminAreaPath);
+if (adminAreaPath.includes("admin")) {
+      socket.emit('join','adminRoom')
+}
+
+socket.on("orderUpdated", (data) => {
+  const updatedOrder = { ...order };
+  updatedOrder.updatedAt = moment().format();
+  updatedOrder.status = data.status;
+  updateStatus(updatedOrder);
+  new Noty({
+    type: "success",
+    timeout: 1000,
+    progressBar: false,
+    text: "Order Updated",
+  }).show();
+});
