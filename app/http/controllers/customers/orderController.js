@@ -63,7 +63,8 @@ function orderController() {
         });
     },
 
-      async index(req, res) {
+      
+    async index(req, res) {
       try {
         const orders = await Order.find({ customerId: req.user._id })
           .sort({ createdAt: -1 })
