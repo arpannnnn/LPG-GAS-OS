@@ -4,6 +4,7 @@ import { initAdmin } from "./admin";
 import moment from "moment/moment";
 import { createElement } from "react";
 import { initStripe } from "./stripe";
+
 let addToCart = document.querySelectorAll(".add-to-cart");
 let cartCounter = document.querySelector("#cartCounter");
 
