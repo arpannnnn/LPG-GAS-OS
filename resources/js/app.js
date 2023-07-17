@@ -3,6 +3,7 @@ import Noty from "noty";
 import { initAdmin } from "./admin";
 import moment from "moment/moment";
 import { createElement } from "react";
+import { initStripe } from "./stripe";
 let addToCart = document.querySelectorAll(".add-to-cart");
 let cartCounter = document.querySelector("#cartCounter");
 
@@ -44,8 +45,6 @@ if (alertMsg) {
   }, 2000);
 }
 
-
-
 //Change Order Status
 let statuses = document.querySelectorAll(".status_line");
 let hiddenInput = document.querySelector("#hiddenInput");
@@ -78,6 +77,11 @@ function updateStatus(order) {
 }
 updateStatus(order);
 
+
+
+initStripe()
+
+
 //socketClientSide
 let socket = io();
 
@@ -89,8 +93,8 @@ if (order) {
 let adminAreaPath = window.location.pathname;
 
 if (adminAreaPath.includes("admin")) {
-      initAdmin(socket);
-      socket.emit('join','adminRoom')
+  initAdmin(socket);
+  socket.emit("join", "adminRoom");
 }
 
 socket.on("orderUpdated", (data) => {
@@ -105,8 +109,3 @@ socket.on("orderUpdated", (data) => {
     text: "Order Updated",
   }).show();
 });
-
-
-
-
-

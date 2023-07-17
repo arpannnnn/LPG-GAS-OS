@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@stripe/stripe-js": "^1.54.1",
     "autoprefixer": "10.4.5",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
