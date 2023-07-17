@@ -40,6 +40,7 @@ function orderController() {
                   .save()
                   .then(() => {
                     // Emit
+                    
                     const eventEmitter = req.app.get("eventEmitter");
                     eventEmitter.emit("orderPlaced", placedOrder);
                     delete req.session.cart;
