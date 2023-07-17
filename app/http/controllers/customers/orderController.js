@@ -34,7 +34,8 @@ function orderController() {
                 description: `LPG order: ${placedOrder.id}`,
               })
               .then(() => {
-                placedOrder.paymentStatus = true;
+                placedOrder.paymentStatus = true
+                placedOrder.paymentType = paymentType
                 placedOrder
                   .save()
                   .then(() => {
