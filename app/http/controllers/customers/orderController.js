@@ -56,6 +56,7 @@ function orderController() {
                 return res.json({ message: "Payment Failed" });
               });
           } else{
+            delete req.session.cart;
             return res.json({ message: "Order placed sucessfully" });
           }
         })
