@@ -48,13 +48,15 @@ function orderController() {
                   })
                   .catch((err) => {
                     console.log(err);
-                    return res.json({ message: "Payment Failed" });
+                   
                   });
               })
               .catch((err) => {
                 delete req.session.cart;
                 return res.json({ message: "Payment Failed" });
               });
+          } else{
+            return res.json({ message: "Order placed sucessfully" });
           }
         })
         .catch((err) => {
