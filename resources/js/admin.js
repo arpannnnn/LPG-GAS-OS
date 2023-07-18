@@ -76,12 +76,9 @@ export function initAdmin(socket) {
             </td>
             <td class="border px-4 py-2">${moment(order.createdAt).format("hh:mm A")}
             </td>
-
-
-            </td>
-            <td class="border px-4 py-2">
-            ${order.paymentStatus ? 'paid ' : 'not Paid'}
-            </td>
+               <td class="border px-4 py-2">
+              ${order.paymentStatus ? 'Paid By Card ' : 'Cash On Delivery'}
+              </td>
           </tr>
         `;
       })
@@ -97,7 +94,6 @@ export function initAdmin(socket) {
       text: "New Order",
     }).show();
     orders.unshift(order);
-    orderTableBody.innerHTML = '';
     orderTableBody.innerHTML = generateMarkup(orders);
   });
 }

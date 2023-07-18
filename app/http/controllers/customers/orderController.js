@@ -56,6 +56,8 @@ function orderController() {
                 return res.json({ message: "Payment Failed" });
               });
           } else{
+            const eventEmitter = req.app.get("eventEmitter");
+            eventEmitter.emit("orderPlaced", placedOrder);
             delete req.session.cart;
             return res.json({ message: "Order placed sucessfully" });
           }

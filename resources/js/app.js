@@ -2,7 +2,7 @@ import axios from "axios";
 import Noty from "noty";
 import { initAdmin } from "./admin";
 import moment from "moment/moment";
-import { createElement } from "react";
+ 
 import { initStripe } from "./stripe";
 
 let addToCart = document.querySelectorAll(".add-to-cart");
@@ -34,7 +34,7 @@ addToCart.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let gas = JSON.parse(btn.dataset.gas);
     updateCart(gas);
-    console.log(gas);
+    
   });
 });
 
@@ -108,5 +108,6 @@ socket.on("orderUpdated", (data) => {
     timeout: 1000,
     progressBar: false,
     text: "Order Updated",
+    
   }).show();
 });

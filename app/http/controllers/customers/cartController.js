@@ -4,14 +4,8 @@ function cartController() {
       res.render("customers/cart");
     },
     update(req, res) {
-      /*let cart = {
-        items: {
-          gasId: { item: gasObject, qty: 0 },
-        },
-        totalQty: 0,
-        totalPrice: 0,
-      };*/
-      //for the first time creating card and ading basic object structure
+      
+      //for the first time creating cart and ading basic object structure
       if (!req.session.cart) {
         req.session.cart = {
           items: {},
