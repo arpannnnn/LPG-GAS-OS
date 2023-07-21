@@ -1,11 +1,13 @@
+// routes.js
+
 const authController = require("../app/http/controllers/authController");
 const homeController = require("../app/http/controllers/homeController");
 const cartController = require("../app/http/controllers/customers/cartController");
 const orderController = require("../app/http/controllers/customers/orderController");
 const adminOrderController = require("../app/http/controllers/admin/orderController");
 const statusController = require("../app/http/controllers/admin/statusController");
-//Middlewares
 
+// Middlewares
 const guest = require("../app/http/middlewares/guest");
 const auth = require("../app/http/middlewares/auth");
 const admin = require("../app/http/middlewares/admin");
@@ -21,7 +23,8 @@ function initRoutes(app) {
 
   app.get("/cart", cartController().index);
   app.post("/update-cart", cartController().update);
-
+  //app.post("/cart/remove-item", cartController().deleteItem);
+ 
   //Customer routes
 
   app.post("/orders", auth, orderController().store);

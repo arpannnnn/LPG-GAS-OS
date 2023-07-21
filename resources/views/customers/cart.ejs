@@ -21,6 +21,7 @@
               <%= gas.qty %> Pcs 
             </span>
             <span class="font-bold text-lg">NPRs <%= gas.item.price * gas.qty %></span>
+          <button class="ml-12" id="deletecartButton" data-gas="<%= gas.item._id %>"> Delete</button>
           </div>
         <% } %>
         <hr />

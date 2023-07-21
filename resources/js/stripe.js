@@ -65,14 +65,17 @@ export async function initStripe() {
       }
 
       // Verify card
-      stripe.createToken(card).then((result) => {
-        console.log(result)
-        
-        formObject.stripeToken = result.token.id;
-        placeOrder(formObject);
-      }).catch((err) => {
-        console.log(err);
-      });
+      stripe
+        .createToken(card)
+        .then((result) => {
+          console.log(result);
+
+          formObject.stripeToken = result.token.id;
+          placeOrder(formObject);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   }
 }
