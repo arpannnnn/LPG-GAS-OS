@@ -66,6 +66,7 @@ app.use(
 
 //passport config 
 const passportInit =require('./app/config/passport')
+const User = require('./app/models/user')
 passportInit(passport)
 app.use(passport.initialize());
 app.use(passport.session());
@@ -76,7 +77,7 @@ passport.use(
   new GoogleStrategy(
     {
       clientID: "546013726625-klonbmc2pm5c9s5d701v5cof75isilfk.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
