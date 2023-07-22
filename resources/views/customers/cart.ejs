@@ -1,3 +1,32 @@
+<style>
+  .btn-quantity {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 4px;
+  }
+
+  /* Style for "+" button */
+  .btn-quantity.increaseQty {
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+  /* Style for "-" button */
+  .btn-quantity.decreaseQty {
+    background-color: #f44336;
+    color: #fff;
+  }
+
+ 
+
+</style>
+
 
 
 <section class="cart py-16">
@@ -17,19 +46,24 @@
               </h1>
               <span class="text-gray-500"> Regular</span>
             </div>
-            <span class="flex-1">
-              <%= gas.qty %> Pcs 
-            </span>
-            <span class="font-bold text-lg">NPRs <%= gas.item.price * gas.qty %></span>
-          <button class="ml-12" id="deletecartButton" data-gas="<%= gas.item._id %>"> Delete</button>
+            <div class="flex-1">
+              <button class="btn-quantity decreaseQty" data-gas="<%=JSON.stringify(gas.item) %>">-</button>
+              <span class="text-lg">
+                <%= gas.qty %>
+              </span>
+              <button class="btn-quantity increaseQty" data-gas="<%=JSON.stringify(gas.item) %>">+</button>
+            </div>
+            <span class="font-bold text-lg ">NPRs <%= gas.item.price * gas.qty   %></span>
+          
           </div>
         <% } %>
         <hr />
         <div class="text-right py-4">
           <div>
             <span class="text-lg font-bold">Total Amount</span>
-            <span class="amount text-2xl font-bold ml-2">NPRs <%= session.cart.totalPrice %></span>
-          </div>
+            <span id="total_cart_price" class="amount text-2xl font-bold ml-2">NPRs <%= session.cart.totalPrice %>
+            </span>
+                    </div>
           <div>
             <% if(user) { %>
 
@@ -73,16 +107,7 @@
                 <input name="address" id="addressInput" class="border border-gray-400 p-2 w-1/2" type="text" placeholder="Address" onclick="getUserLocation()" />
                 <br>
                 <br>
-                <!--
-                <label for="location">Choose Your Location:</label>
-                <select id="location" class="border border-gray-400 p-2 w-1/2" type="text" placeholder="Address" name="Location">
-                  <option value="volvo">My Location</option>
-                  <option value="saab">Kathmandu</option>
-                  <option value="fiat">Bhaktapur</option>
-                  <option value="audi">LalitPur</option>
-                </select>
-
-              -->
+               
               <div class="mt-4">
                 <div id="card-element"></div>
 
@@ -112,7 +137,7 @@
       </div>
     <% } %>
 </section>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
   function getUserLocation() {
     if ("geolocation" in navigator) {
@@ -140,4 +165,42 @@
         console.log('Error:', error);
       });
   }
+  (function ($) {
+    function update_cart_data(btn, type = '+') {
+      let gas = btn.data('gas');
+      gas.cartAction = type;
+
+      $.ajax({
+        method: 'POST',
+        url: '/update-cart',
+        data: gas,
+        beforeSend: function () {
+          btn.attr('disbled', true);
+        },
+        dataType: 'json',
+        success: function (res) {
+          if (parseInt(res?.productQty)) {
+            btn.parent().find("span").text(res.productQty);
+            $(document).find("#total_cart_price").text(`NPRs ${res.totalPrice}`);
+          } else {
+            window.location.href = window.location.href;
+          }
+        },
+        error: function () {
+          alert('Unable to update cart quantity');
+          window.location.href = window.location.href;
+        },
+        complete: function () {
+          btn.attr('disbled', false);
+        }
+      })
+    }
+    $(document).on('click', '.increaseQty', function () {
+      update_cart_data($(this), '+');
+    });
+
+    $(document).on('click', '.decreaseQty', function () {
+      update_cart_data($(this), '-');
+    });
+  })(jQuery);
 </script>

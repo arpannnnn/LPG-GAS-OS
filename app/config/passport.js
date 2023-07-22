@@ -1,5 +1,4 @@
 const LocalStrategy = require('passport-local').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
@@ -16,18 +15,7 @@ function init(passport) {
 
 
        //Configure Passport strategy for Facebook
-  passport.use(new FacebookStrategy({
-    clientID: 'YOUR_FACEBOOK_APP_ID',
-    clientSecret: 'YOUR_FACEBOOK_APP_SECRET',
-    callbackURL: 'http://localhost:3000/auth/facebook/callback'
-  },
-    (accessToken, refreshToken, profile, done) => {
-      // Save the user's profile to the database or perform any necessary actions
-      // In this example, we'll just return the user's profile
-      return done(null, profile);
-    }
-  ));
-
+  
 
 
       bcrypt.compare(password, user.password)

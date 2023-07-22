@@ -7,7 +7,8 @@ import { initStripe } from "./stripe";
 
 let addToCart = document.querySelectorAll(".add-to-cart");
 let cartCounter = document.querySelector("#cartCounter");
-
+let decreaseQty = document.querySelectorAll(".decreaseQty");
+let increaseQty = document.querySelectorAll(".increaseQty");
 function updateCart(gas) {
   axios
     .post("/update-cart", gas)

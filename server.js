@@ -11,6 +11,9 @@ const session = require('express-session')
 const flash = require('express-flash')
 const MongoDbStore = require('connect-mongo')(session)
 const Emitter = require('events')
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const bcrypt = require('bcrypt');
+
 //Database Connection
 mongoose
   .connect(
@@ -67,6 +70,56 @@ passportInit(passport)
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: "546013726625-klonbmc2pm5c9s5d701v5cof75isilfk.apps.googleusercontent.com",
+      clientSecret: "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",
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    async function (accessToken, refreshToken, profile, cb) {
+      const name = profile.displayName;
+      const email = profile.emails[0].value;
+      const hashedPassword = await bcrypt.hash("123", 10);
+
+      User.findOne({
+        email : email
+      }).then((data, err) => {
+        if( data ){
+          cb(null, data);
+        }else{
+          const storeuser = new User({
+            email : email,
+            password : hashedPassword,
+            name : name
+          });
+
+          storeuser.save().then(() => {
+            cb(null, storeuser);
+          }).catch((err) => {
+            cb(err);
+          })
+        }
+      })
+    }
+  )
+);
+
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    res.redirect("/");
+  }
+);
 
 
 

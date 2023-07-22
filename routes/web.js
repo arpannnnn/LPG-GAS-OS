@@ -13,7 +13,7 @@ const auth = require("../app/http/middlewares/auth");
 const admin = require("../app/http/middlewares/admin");
 
 function initRoutes(app) {
-  homeController();
+  homeController()
   app.get("/", homeController().index);
   app.get("/login", guest, authController().login);
   app.post("/login", authController().postLogin);

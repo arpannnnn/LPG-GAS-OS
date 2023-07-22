@@ -273,6 +273,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 var addToCart = document.querySelectorAll(".add-to-cart");
 var cartCounter = document.querySelector("#cartCounter");
+var decreaseQty = document.querySelectorAll(".decreaseQty");
+var increaseQty = document.querySelectorAll(".increaseQty");
 function updateCart(gas) {
   axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("/update-cart", gas).then(function (res) {
     cartCounter.innerText = res.data.totalQty;
