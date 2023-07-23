@@ -1,18 +1,18 @@
-require('dotenv').config()
-const express = require('express')
-const app = express()
-const path = require('path')
-const ejs = require('ejs')
-const expressLayout = require('express-ejs-layouts')
-const PORT = process.env.PORT || 3000
-const passport = require('passport')
-const mongoose = require('mongoose')
-const session = require('express-session')
-const flash = require('express-flash')
-const MongoDbStore = require('connect-mongo')(session)
-const Emitter = require('events')
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const path = require("path");
+const ejs = require("ejs");
+const expressLayout = require("express-ejs-layouts");
+const PORT = process.env.PORT || 3000;
+const passport = require("passport");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const flash = require("express-flash");
+const MongoDbStore = require("connect-mongo")(session);
+const Emitter = require("events");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 //Database Connection
 mongoose
@@ -30,25 +30,15 @@ mongoose
     console.error("Error connecting to the database:", error);
   });
 
-
-
-
-
-
-
 // Session Store
 const mongoStore = new MongoDbStore({
   mongooseConnection: mongoose.connection,
-  collection: 'sessions'
-})
+  collection: "sessions",
+});
 
 //Event Emitter
- const eventEmitter=new Emitter()
- app.set('eventEmitter',eventEmitter)
-
-
-
-
+const eventEmitter = new Emitter();
+app.set("eventEmitter", eventEmitter);
 
 // Session Config
 app.use(
@@ -57,26 +47,22 @@ app.use(
     resave: true,
     store: mongoStore,
     saveUninitialized: false,
-    cookie: { maxAge: 100 * 60 * 60*24 }, //~24hrs
+    cookie: { maxAge: 100 * 60 * 60 * 24 }, //~24hrs
   })
-)
+);
 
-
-
-
-//passport config 
-const passportInit =require('./app/config/passport')
-const User = require('./app/models/user')
-passportInit(passport)
+//passport config
+const passportInit = require("./app/config/passport");
+const User = require("./app/models/user");
+passportInit(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 passport.use(
   new GoogleStrategy(
     {
-      clientID: "546013726625-klonbmc2pm5c9s5d701v5cof75isilfk.apps.googleusercontent.com",
+      clientID:
+        "546013726625-klonbmc2pm5c9s5d701v5cof75isilfk.apps.googleusercontent.com",
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
@@ -86,28 +72,30 @@ passport.use(
       const hashedPassword = await bcrypt.hash("123", 10);
 
       User.findOne({
-        email : email
+        email: email,
       }).then((data, err) => {
-        if( data ){
+        if (data) {
           cb(null, data);
-        }else{
+        } else {
           const storeuser = new User({
-            email : email,
-            password : hashedPassword,
-            name : name
+            email: email,
+            password: hashedPassword,
+            name: name,
           });
 
-          storeuser.save().then(() => {
-            cb(null, storeuser);
-          }).catch((err) => {
-            cb(err);
-          })
+          storeuser
+            .save()
+            .then(() => {
+              cb(null, storeuser);
+            })
+            .catch((err) => {
+              cb(err);
+            });
         }
-      })
+      });
     }
   )
 );
-
 
 app.get(
   "/auth/google",
@@ -122,58 +110,47 @@ app.get(
   }
 );
 
-
-
-app.use(flash())
+app.use(flash());
 
 // Assets
-app.use(express.static("public"))
-app.use(express.urlencoded({extended:false}))
-app.use("/public/", express.static("./public"))
-app.use(express.json())
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false }));
+app.use("/public/", express.static("./public"));
+app.use(express.json());
 
 //Global Midalware
-app.use(( req,res,next)=>{
-res.locals.session=req.session
+app.use((req, res, next) => {
+  res.locals.session = req.session;
 
-res.locals.user=req.user
-next()
-})
-
-
-
+  res.locals.user = req.user;
+  next();
+});
 
 // Set Template Engine
-app.use(expressLayout)
-app.set("views", path.join(__dirname, "/resources/views"))
-app.set("view engine", "ejs")
+app.use(expressLayout);
+app.set("views", path.join(__dirname, "/resources/views"));
+app.set("view engine", "ejs");
 
 // Routes
-require("./routes/web")(app)
+require("./routes/web")(app);
 
 const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-//socket 
-const io =require('socket.io')(server)
-io.on('connection',(socket)=>{
- //join
- 
-  socket.on('join',(orderId)=>{
-  
-    socket.join(orderId)
+//socket
+const io = require("socket.io")(server);
+io.on("connection", (socket) => {
+  //join
 
-  })
+  socket.on("join", (orderId) => {
+    socket.join(orderId);
+  });
+});
+eventEmitter.on("orderUpdated", (data) => {
+  io.to(`order_${data.id}`).emit("orderUpdated", data);
+});
 
-})
-eventEmitter.on('orderUpdated',(data)=>{
-  io.to(`order_${data.id}`).emit('orderUpdated',data)
-})
-
-eventEmitter.on('orderPlaced', (data)=>{
-  io.to('adminRoom').emit('orderPlaced',data)
-
-})
-
-
+eventEmitter.on("orderPlaced", (data) => {
+  io.to("adminRoom").emit("orderPlaced", data);
+});

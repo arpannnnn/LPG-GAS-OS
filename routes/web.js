@@ -1,4 +1,3 @@
-// routes.js
 
 const authController = require("../app/http/controllers/authController");
 const homeController = require("../app/http/controllers/homeController");

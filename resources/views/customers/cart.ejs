@@ -53,8 +53,7 @@
               </span>
               <button class="btn-quantity increaseQty" data-gas="<%=JSON.stringify(gas.item) %>">+</button>
             </div>
-            <span class="font-bold text-lg ">NPRs <%= gas.item.price * gas.qty   %></span>
-          
+            <span class="font-bold text-lg">NPRs <%= gas.item.price * gas.qty  %></span>
           </div>
         <% } %>
         <hr />
@@ -181,6 +180,10 @@
         success: function (res) {
           if (parseInt(res?.productQty)) {
             btn.parent().find("span").text(res.productQty);
+
+
+            
+
             $(document).find("#total_cart_price").text(`NPRs ${res.totalPrice}`);
           } else {
             window.location.href = window.location.href;
@@ -202,5 +205,6 @@
     $(document).on('click', '.decreaseQty', function () {
       update_cart_data($(this), '-');
     });
+    
   })(jQuery);
 </script>
