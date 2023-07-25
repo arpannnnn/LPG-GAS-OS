@@ -8,8 +8,8 @@ function init(passport) {
     new LocalStrategy(
       { usernameField: "email" },
       async (email, password, done) => {
-        // Login
-        // Check if email exists
+       
+        // Check if email exists or not 
         const user = await User.findOne({ email: email });
         if (!user) {
           return done(null, false, { message: "No user with this email" });
