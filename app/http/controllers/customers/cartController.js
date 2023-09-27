@@ -54,6 +54,7 @@ function cartController() {
             }
           }
         }
+        
   
         return res.json({
           productQty: req.session.cart.items[req.body._id].qty,
