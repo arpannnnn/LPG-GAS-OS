@@ -67,7 +67,6 @@ function orderController() {
           return res.status(500).json({ message: "Somethingwent wrong" });
         });
     },
-
       
     async index(req, res) {
       try {

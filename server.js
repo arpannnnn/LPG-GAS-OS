@@ -9,6 +9,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const flash = require("express-flash");
+const flashMiddleware = require('./flashMiddleware');
 const MongoDbStore = require("connect-mongo")(session);
 const Emitter = require("events");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
@@ -50,6 +51,8 @@ app.use(
     cookie: { maxAge: 100 * 60 * 60 * 24 }, //~24hrs
   })
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //passport config
 const passportInit = require("./app/config/passport");
@@ -111,12 +114,12 @@ app.get(
 );
 
 app.use(flash());
+app.use(flashMiddleware);
 
 // Assets
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
+
 app.use("/public/", express.static("./public"));
-app.use(express.json());
 
 //Global Midalware
 app.use((req, res, next) => {

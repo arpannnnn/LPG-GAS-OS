@@ -21,13 +21,15 @@
       </div>
       <div>
         <ul class="flex items-center">
-          <li class="ml-6"><a href="/">Our Products</a></li>
+          <li class="ml-6"><a href="/">Home</a></li>
           <% if(user && user.role !== 'admin') { %>
             <li class="ml-6"><a href="/customer/orders">My Orders</a></li>
           <% } %>
           <% if(user && user.role == 'admin') { %>
-            <li class="ml-6"><a href="/admin/orders">Orders List</a></li>
-            <li class="ml-6"><a href="/admin/users">users List</a></li>
+            <li class="ml-6"><a href="/admin/products">Products</a></li>
+            <li class="ml-6"><a href="/admin/product/add">Add Product</a></li>
+            <li class="ml-6"><a href="/admin/orders">Orders</a></li>
+            <li class="ml-6"><a href="/admin/users">Users</a></li>
 
           <% } %>
           <% if(user) { %>
