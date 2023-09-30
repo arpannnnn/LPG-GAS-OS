@@ -129,6 +129,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // Set Template Engine
 app.use(expressLayout);
 app.set("views", path.join(__dirname, "/resources/views"));
